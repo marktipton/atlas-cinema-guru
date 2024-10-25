@@ -18,5 +18,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // Logged in users are authenticated, otherwise redirect to login page
       return !!auth;
     },
+    async session({ session }) {
+      // Add custom session fields if necessary
+      return session;
+    },
   },
 });
