@@ -1,6 +1,5 @@
 import NextAuth from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
-import Credentials from "next-auth/providers/credentials";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   theme: {
@@ -13,17 +12,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       clientId: process.env.GITHUB_ID as string,
       clientSecret: process.env.GITHUB_SECRET as string,
     }),
-    Credentials({
-      credentials: {
-        email: {
-          label: "Email",
-        },
-        password: {
-          label: "Password",
-          type: "password",
-        },
-      }
-    })
   ],
   callbacks: {
     authorized: async ({ auth }) => {
