@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { FilmIcon } from "@heroicons/react/24/outline";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 
 export const Header = () => {
   const { data: session } = useSession();
@@ -14,6 +14,11 @@ export const Header = () => {
         <div>
           {`Hello, ${session.user?.email}`}
         </div>
+        <button
+          onClick={() => signOut()}
+        >
+          Logout
+        </button>
       </div>
     )
 
