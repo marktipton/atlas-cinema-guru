@@ -3,14 +3,14 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FolderIcon } from "@heroicons/react/24/solid"
+import { ClockIcon , FolderIcon, StarIcon } from "@heroicons/react/24/solid"
 
 const NavBar: React.FC = () => {
   const pathname = usePathname(); // Get the current pathname
   const links = [
-    { href: '/', label: 'Home', icon: {FolderIcon}},
-    { href: '/favorites', label: 'Favorites' },
-    { href: '/watch-later', label: 'Watch Later' },
+    { href: '/', label: 'Home', icon: FolderIcon},
+    { href: '/favorites', label: 'Favorites', icon: StarIcon},
+    { href: '/watch-later', label: 'Watch Later', icon: ClockIcon },
   ];
 
   return (
@@ -19,13 +19,14 @@ const NavBar: React.FC = () => {
       <ul className='space-y-2'>
         {links.map((link) => (
           <li key={link.href} style={{ marginBottom: '10px' }}>
-            <Link href={link.href}
-                  className={`${
-                  pathname === link.href ? 'text-yellow-400' : 'text-white'
-                } hover:text-yellow-400`}
+            <Link
+              href={link.href}
+              className={`flex items-center gap-2 ${
+                pathname === link.href ? 'text-yellow-400' : 'text-white'
+              } hover:text-yellow-400`}
             >
-              <FolderIcon className='w-10'/>
-              {link.label}
+              <link.icon className='w-6'/>
+              <span>{link.label}</span>
             </Link>
           </li>
         ))}
