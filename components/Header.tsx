@@ -18,7 +18,7 @@ export const Header = () => {
           onClick={() => signOut()}
           className='h-10 flex'
         >
-          <ArrowRightStartOnRectangleIcon className='w-5'/>
+          <ArrowRightStartOnRectangleIcon className='w-5 h-5'/>
           <span>Logout</span>
         </button>
       </div>

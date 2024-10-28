@@ -19,11 +19,10 @@ export default function RootLayout({ children }: Props) {
         <SessionProvider>
           <Header />
           <div className="flex h-full min-h-screen">
-            <NavBar />
             <main className="flex-grow">
+              <NavBar />
               {children}
             </main>
-
           </div>
         </SessionProvider>
       </body>
