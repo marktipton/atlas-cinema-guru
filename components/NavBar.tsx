@@ -22,8 +22,8 @@ const NavBar: React.FC = () => {
             <Link
               href={link.href}
               className={`flex items-center gap-2 ${
-                pathname === link.href ? 'text-yellow-400' : 'text-white'
-              } hover:text-yellow-400`}
+                pathname === link.href ? 'text-teal' : 'text-white'
+              } hover:text-teal`}
             >
               <link.icon className='w-6'/>
               <span>{link.label}</span>
