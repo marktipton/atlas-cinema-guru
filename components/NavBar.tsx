@@ -14,7 +14,6 @@ const NavBar: React.FC = () => {
   ];
 
   return (
-    <div className='w-48 bg-darkTeal h-full'>
       <nav className='w-48 bg-darkTeal h-full'>
         <h2 className='text-lg font-bold mb-4'>Navigation</h2>
         <ul className='space-y-2'>
@@ -33,7 +32,7 @@ const NavBar: React.FC = () => {
           ))}
         </ul>
       </nav>
-    </div>
+
   );
 };
 
