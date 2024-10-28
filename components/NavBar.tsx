@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FolderIcon } from "@heroicons/react/24/outline"
+import { FolderIcon } from "@heroicons/react/24/solid"
 
 const NavBar: React.FC = () => {
   const pathname = usePathname(); // Get the current pathname
