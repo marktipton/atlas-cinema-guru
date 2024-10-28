@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { FilmIcon } from "@heroicons/react/24/outline";
+import { FilmIcon, ArrowRightStartOnRectangleIcon } from "@heroicons/react/24/outline";
 import { useSession, signOut } from "next-auth/react";
 
 export const Header = () => {
@@ -16,8 +16,10 @@ export const Header = () => {
         </div>
         <button
           onClick={() => signOut()}
+          className='h-10 flex'
         >
-          Logout
+          <ArrowRightStartOnRectangleIcon className='w-5'/>
+          <span>Logout</span>
         </button>
       </div>
     )
