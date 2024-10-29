@@ -8,21 +8,24 @@ export const Header = () => {
   const { data: session } = useSession();
   if (session) {
     return (
-      <div className='bg-teal h-10 text-searchBlue flex items-center'>
-        <FilmIcon className='w-5 h-5'/>
-        <span className='text-xl font-bold'>Cinema Guru</span>
-        <div>
-          {`Hello, ${session.user?.email}`}
+      <div className='bg-teal h-10 text-searchBlue flex items-center justify-between'>
+        <div className='flex items-center gap-1 ml-2'>
+          <FilmIcon className='w-5 h-5'/>
+          <div className='text-xl font-bold'>Cinema Guru</div>
         </div>
-        <div>
-          <button
-            onClick={() => signOut()}
-            className='flex items-center'
-          >
-            <ArrowRightStartOnRectangleIcon className='w-5 h-5'/>
-            <span>Logout</span>
-          </button>
-
+        <div className='flex gap-3 mr-2'>
+          <div>
+            {`Hello, ${session.user?.email}`}
+          </div>
+          <div>
+            <button
+              onClick={() => signOut()}
+              className='flex items-center gap-1'
+            >
+              <ArrowRightStartOnRectangleIcon className='w-5 h-5'/>
+              <span>Logout</span>
+            </button>
+          </div>
         </div>
       </div>
     )
