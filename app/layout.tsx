@@ -18,9 +18,11 @@ export default function RootLayout({ children }: Props) {
       <body className={`min-h-screen antialiased  bg-[#00003c] text-white`}>
         <SessionProvider>
           <Header />
-          <div className="flex h-full min-h-screen">
-            <main className="flex-grow">
-              <NavBar />
+          <div className="flex h-full">
+            <div className="flex-grow-y">
+              <NavBar/>
+            </div>
+            <main className="flex-grow p-4 overflow-y-auto">
               {children}
             </main>
           </div>
