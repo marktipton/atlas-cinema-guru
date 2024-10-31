@@ -1,5 +1,6 @@
 "use client";
 
+import SearchBar from "@/components/SearchBar";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
@@ -36,19 +37,25 @@ export default function Page() {
   }
 
   return (
-    <div className="flex items-center justify-center h-screen">
-      <h1>{`Hello ${session.user?.name}`}</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {titles.map((title) => (
-          <div key={title.id} className="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden">
-            <img src={title.image} alt={title.title} className="w-full h-48 object-cover" />
-            <div className="p-4">
-              <h2 className="text-lg font-semibold">{title.title}</h2>
-              <p className="text-gray-600 text-sm mb-2">{title.synopsis}</p>
-              <p className="text-gray-500 text-xs">{title.genre} | {title.released}</p>
+    <>
+      <div className="flex flex-col items-center justify-center h-screen">
+        <SearchBar/>
+        <div>
+          <h1>{`Hello ${session.user?.name}`}</h1>
+        </div>
+        {/* <div className="grid grid-cols-3 gap-6">
+          {titles.map((title) => (
+            <div key={title.id} className="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden">
+              <img src={title.image} alt={title.title} className="w-full h-48 object-cover" />
+              <div className="p-4">
+                <h2 className="text-lg font-semibold">{title.title}</h2>
+                <p className="text-gray-600 text-sm mb-2">{title.synopsis}</p>
+                <p className="text-gray-500 text-xs">{title.genre} | {title.released}</p>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>    </div>
+          ))}
+        </div> */}
+      </div>
+    </>
   );
 }
