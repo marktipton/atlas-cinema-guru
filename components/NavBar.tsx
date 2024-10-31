@@ -14,8 +14,8 @@ const NavBar: React.FC = () => {
   ];
 
   return (
-      <nav className='w-48 bg-darkTeal h-full'>
-        <h2 className='text-lg font-bold mb-4'>Navigation</h2>
+      <nav className='w-48 bg-darkTeal h-full flex-col'>
+        {/* <h2 className='text-lg font-bold mb-4'>Navigation</h2> */}
         <ul className='space-y-2'>
           {links.map((link) => (
             <li key={link.href} style={{ marginBottom: '10px' }}>
