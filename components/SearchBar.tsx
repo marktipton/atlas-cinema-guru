@@ -11,8 +11,8 @@ const SearchBar = () => {
         <input
           value={search}
           onChange={e => setSearch(e.target.value)}
-          placeholder=' Search Movies...'
-          className='bg-searchBlue outline outline-2 outline-teal rounded-full'
+          placeholder='Search Movies...'
+          className='bg-searchBlue outline outline-2 p-2 outline-teal rounded-full'
         />
         <div>
           <div>

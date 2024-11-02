@@ -22,7 +22,7 @@ export default function RootLayout({ children }: Props) {
             <div className="flex-grow-y">
               <NavBar/>
             </div>
-            <main className="flex-grow p-4 overflow-y-auto">
+            <main className="flex-grow p-8 overflow-y-auto">
               {children}
             </main>
           </div>

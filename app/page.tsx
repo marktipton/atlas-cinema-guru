@@ -39,14 +39,14 @@ export default function Page() {
   return (
     <>
       <div className="flex flex-col items-center justify-center h-screen">
-        <SearchBar/>
-        <div>
+        <SearchBar />
+        {/* <div>
           <h1>{`Hello ${session.user?.name}`}</h1>
-        </div>
-        {/* <div className="grid grid-cols-3 gap-6">
+        </div> */}
+        <div className="grid grid-cols-3 gap-6">
           {titles.map((title) => (
             <div key={title.id} className="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden">
-              <img src={title.image} alt={title.title} className="w-full h-48 object-cover" />
+              <img src={title.image} alt={title.title} className="w-full h-48 object-cover outline outline-2 outline-teal" />
               <div className="p-4">
                 <h2 className="text-lg font-semibold">{title.title}</h2>
                 <p className="text-gray-600 text-sm mb-2">{title.synopsis}</p>
@@ -54,7 +54,7 @@ export default function Page() {
               </div>
             </div>
           ))}
-        </div> */}
+        </div>
       </div>
     </>
   );

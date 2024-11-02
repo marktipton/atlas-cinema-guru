@@ -14,19 +14,23 @@ const NavBar: React.FC = () => {
   ];
 
   return (
-      <nav className='w-48 bg-darkTeal h-full flex-col'>
+      <nav
+        className='group h-full flex flex-col bg-darkTeal transition-all duration-300 w-16 hover:w-48'
+      >
         {/* <h2 className='text-lg font-bold mb-4'>Navigation</h2> */}
-        <ul className='space-y-2'>
+        <ul className='space-y-2 mt-4'>
           {links.map((link) => (
-            <li key={link.href} style={{ marginBottom: '10px' }}>
+            <li key={link.href} className='flex items-center'>
               <Link
                 href={link.href}
-                className={`flex items-center gap-2 ${
+                className={`flex items-center gap-2 p-2 pl-4 rounded-md ${
                   pathname === link.href ? 'text-searchBlue' : 'text-white'
-                } hover:text-searchBlue`}
+                } hover:text-searchBlue transition-all duration-300`}
               >
-                <link.icon className='w-6'/>
-                <span>{link.label}</span>
+                <link.icon className='w-6 h-6'/>
+                <span className='opacity-0 group-hover:opacity-100 transition-opacity duration-300 ml-2'>
+                  {link.label}
+                </span>
               </Link>
             </li>
           ))}
