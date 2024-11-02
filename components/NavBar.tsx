@@ -28,7 +28,7 @@ const NavBar: React.FC = () => {
                 } hover:text-searchBlue transition-all duration-300`}
               >
                 <link.icon className='w-6 h-6'/>
-                <span className='opacity-0 group-hover:opacity-100 transition-opacity duration-300 ml-2'>
+                <span className='absolute left-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ml-2'>
                   {link.label}
                 </span>
               </Link>
