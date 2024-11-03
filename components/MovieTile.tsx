@@ -25,10 +25,10 @@ const MovieTile: React.FC<MovieTileProps> = ({ title }) => {
       />
       <div className="p-4">
         <h2 className="text-lg font-semibold">{title.title} ({title.released})</h2>
-        <p className="text-gray-600 text-sm mb-2">{title.synopsis}</p>
-        <p className="text-gray-500 text-xs">
+        <p className="text-white text-sm mb-2">{title.synopsis}</p>
+        <span className="inline-block bg-teal text-white text-xs py-2 px-2 rounded-full">
           {title.genre}
-        </p>
+        </span>
       </div>
     </div>
   );
