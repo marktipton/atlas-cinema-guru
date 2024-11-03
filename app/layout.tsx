@@ -17,11 +17,13 @@ type Props = {
 export default function RootLayout({ children }: Props) {
   return (
     <html lang="en">
-      <body className={`min-h-screen antialiased  bg-[#00003c] text-white`}>
+      <body className={`min-h-screen bg-[#00003c] text-white`}>
         <SessionProvider>
           <TitlesProvider>
             <AuthGuard>
-              <Header />
+              <header>
+                <Header />
+              </header>
               <div className="flex h-full">
                 <div className="flex-grow-y">
                   <NavBar/>
