@@ -21,13 +21,13 @@ const MovieTile: React.FC<MovieTileProps> = ({ title }) => {
       <img
         src={title.image}
         alt={title.title}
-        className="w-full h-48 object-cover outline outline-2 outline-teal"
+        className="w-full h-48 object-cover"
       />
       <div className="p-4">
-        <h2 className="text-lg font-semibold">{title.title}</h2>
+        <h2 className="text-lg font-semibold">{title.title} ({title.released})</h2>
         <p className="text-gray-600 text-sm mb-2">{title.synopsis}</p>
         <p className="text-gray-500 text-xs">
-          {title.genre} | {title.released}
+          {title.genre}
         </p>
       </div>
     </div>
