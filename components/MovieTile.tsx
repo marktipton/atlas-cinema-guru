@@ -17,7 +17,7 @@ type MovieTileProps = {
 
 const MovieTile: React.FC<MovieTileProps> = ({ title }) => {
   return (
-    <div className="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden">
+    <div className="max-w-xs bg-searchBlue shadow-lg rounded-lg overflow-hidden outline outline-2 outline-teal">
       <img
         src={title.image}
         alt={title.title}
