@@ -17,14 +17,14 @@ const Pagination = () => {
       <button
         onClick={handlePrevious}
         disabled={currentPage === 1}
-        className={`px-4 py-2 mx-2 ${currentPage === 1 ? "opacity-50 cursor-not-allowed" : "bg-teal text-white"}`}
+        className={`px-4 py-2 ${"bg-teal text-white rounded-l-full"}`}
       >
         Previous
       </button>
       <button
         onClick={handleNext}
         disabled={currentPage === totalPages}
-        className={`px-4 py-2 mx-2 ${currentPage === totalPages ? "opacity-50 cursor-not-allowed" : "bg-teal text-white"}`}
+        className={`px-4 py-2 mx-1 ${currentPage === totalPages ? "opacity-50 cursor-not-allowed" : "bg-teal text-white rounded-r-full"}`}
       >
         Next
       </button>
