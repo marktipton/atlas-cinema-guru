@@ -17,7 +17,7 @@ type MovieTileProps = {
 
 const MovieTile: React.FC<MovieTileProps> = ({ title }) => {
   return (
-    <div className="max-w-md rounded-lg overflow-hidden outline outline-2 outline-teal relative group h-5/6">
+    <div className="max-w-sm rounded-lg overflow-hidden outline outline-2 outline-teal relative group">
       <img
         src={title.image}
         alt={title.title}
