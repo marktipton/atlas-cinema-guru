@@ -40,7 +40,7 @@ const SearchBar = () => {
           </div>
         </div>
       </div>
-      <div className='w-4/12'>
+      <div className='w-3/12'>
         <Genres/>
       </div>
     </div>

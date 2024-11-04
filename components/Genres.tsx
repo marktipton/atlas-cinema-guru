@@ -36,7 +36,7 @@ const Genres: React.FC = () => {
           <div
             key={genre}
             onClick={() => toggleGenre(genre)}
-            className={`cursor-pointer border rounded-full px-4 py-1 ${
+            className={`cursor-pointer border rounded-full px-2 py-1 ${
               selectedGenres.has(genre)
                 ? 'bg-teal text-blue border-teal' // Selected styles
                 : 'border-teal text-white'  // Default styles
