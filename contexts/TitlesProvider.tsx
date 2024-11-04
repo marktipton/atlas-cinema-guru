@@ -39,20 +39,51 @@ export const TitlesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     }
   }, [session]);
 
-  const toggleFavorite = (id: string) => {
+  const toggleFavorite = async (id: string) => {
     setTitles((prevTitles) =>
       prevTitles.map((title) =>
         title.id === id ? { ...title, favorited: !title.favorited } : title
       )
     );
+    try {
+      const updatedTitle = titles.find((title) => title.id === id);
+
+      if (updatedTitle && updatedTitle.favorited) {
+        await fetch(`/api/favorites/${id}`, { method: 'DELETE' });
+      } else {
+        await fetch('/api/favorites', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id }),
+        });
+      }
+    } catch (error) {
+      console.error("Error updating favorites:", error);
+    }
   };
 
-  const toggleWatchLater = (id: string) => {
+  const toggleWatchLater = async (id: string) => {
     setTitles((prevTitles) =>
       prevTitles.map((title) =>
         title.id === id ? { ...title, watchLater: !title.watchLater } : title
       )
     );
+
+    try {
+      const updatedTitle = titles.find((title) => title.id === id);
+
+      if (updatedTitle && updatedTitle.watchLater) {
+        await fetch(`/api/watchlater/${id}`, { method: 'DELETE' });
+      } else {
+        await fetch('/api/watchlater', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id }),
+        });
+      }
+    } catch (error) {
+      console.error("Error updating watch later:", error);
+    }
   };
 
   return (
