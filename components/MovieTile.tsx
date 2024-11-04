@@ -1,4 +1,7 @@
 import React from 'react';
+import { ClockIcon , StarIcon } from "@heroicons/react/24/solid"
+import { ClockIcon as ClockIconOutline , StarIcon as StarIconOutline} from "@heroicons/react/24/outline"
+
 
 type Title = {
   id: string;
@@ -29,6 +32,14 @@ const MovieTile: React.FC<MovieTileProps> = ({ title }) => {
         <span className="inline-block bg-teal text-white text-xs py-2 px-2 rounded-full">
           {title.genre}
         </span>
+      </div>
+      <div className="absolute top-3 right-3 flex gap-1">
+        <button className="text-white rounded-full w-6 h-6">
+          {title.favorited ? <StarIcon /> : <StarIconOutline />}
+        </button>
+        <button className="text-white rounded-full w-6 h-6">
+          {title.watchLater ? <ClockIcon /> : <ClockIconOutline />}
+        </button>
       </div>
     </div>
   );
