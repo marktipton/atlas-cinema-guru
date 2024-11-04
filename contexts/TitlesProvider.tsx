@@ -45,17 +45,15 @@ export const TitlesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         title.id === id ? { ...title, favorited: !title.favorited } : title
       )
     );
+
     try {
       const updatedTitle = titles.find((title) => title.id === id);
 
+      // Use the existing API endpoints with ID in the URL
       if (updatedTitle && updatedTitle.favorited) {
-        await fetch(`/api/favorites/${id}`, { method: 'DELETE' });
+        await fetch(`/api/favorites/${id}`, { method: "DELETE" });
       } else {
-        await fetch('/api/favorites', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id }),
-        });
+        await fetch(`/api/favorites/${id}`, { method: "POST" });
       }
     } catch (error) {
       console.error("Error updating favorites:", error);
@@ -72,14 +70,11 @@ export const TitlesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     try {
       const updatedTitle = titles.find((title) => title.id === id);
 
+      // Use the existing API endpoints with ID in the URL
       if (updatedTitle && updatedTitle.watchLater) {
-        await fetch(`/api/watchlater/${id}`, { method: 'DELETE' });
+        await fetch(`/api/watch-later/${id}`, { method: "DELETE" });
       } else {
-        await fetch('/api/watchlater', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id }),
-        });
+        await fetch(`/api/watch-later/${id}`, { method: "POST" });
       }
     } catch (error) {
       console.error("Error updating watch later:", error);
