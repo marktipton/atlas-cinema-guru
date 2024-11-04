@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTitles } from '@/contexts/TitlesContext';
+import { useTitles } from '@/contexts/TitlesProvider';
 import MovieTile from './MovieTile';
 
 const MovieGrid: React.FC = () => {

@@ -16,6 +16,8 @@ type Title = {
 type TitlesContextType = {
   titles: Title[];
   setTitles: React.Dispatch<React.SetStateAction<Title[]>>;
+  toggleFavorite: (id: string) => void;
+  toggleWatchLater: (id: string) => void;
 };
 
 const TitlesContext = createContext<TitlesContextType | undefined>(undefined);
@@ -37,8 +39,29 @@ export const TitlesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     }
   }, [session]);
 
+  const toggleFavorite = (id: string) => {
+    setTitles((prevTitles) =>
+      prevTitles.map((title) =>
+        title.id === id ? { ...title, favorited: !title.favorited } : title
+      )
+    );
+  };
+
+  const toggleWatchLater = (id: string) => {
+    setTitles((prevTitles) =>
+      prevTitles.map((title) =>
+        title.id === id ? { ...title, watchLater: !title.watchLater } : title
+      )
+    );
+  };
+
   return (
-    <TitlesContext.Provider value={{ titles, setTitles }}>
+    <TitlesContext.Provider value={{
+      titles,
+      setTitles,
+      toggleFavorite,
+      toggleWatchLater,
+    }}>
       {children}
     </TitlesContext.Provider>
   );

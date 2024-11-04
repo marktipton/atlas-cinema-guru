@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
 import NavBar from "@/components/NavBar";
 import { Header } from "@/components/Header";
-import { TitlesProvider } from "@/contexts/TitlesContext";
+import { TitlesProvider } from "@/contexts/TitlesProvider";
 import AuthGuard from "@/components/AuthGuard";
 
 export const metadata: Metadata = {
