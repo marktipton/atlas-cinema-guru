@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Genres from './Genres';
 
 const SearchBar = () => {
   const [search, setSearch] = useState('');
@@ -39,9 +40,7 @@ const SearchBar = () => {
           </div>
         </div>
       </div>
-      <div>
-        Genres
-      </div>
+      <Genres/>
     </div>
   )
 }
