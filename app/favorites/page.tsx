@@ -1,9 +1,25 @@
-export default function Favorites() {
+"use client";
+
+import { FavoritesProvider, useFavorites } from "@/contexts/FavoritesProvider";
+import MovieGrid from "@/components/MovieGrid";
+
+function FavoritesContent() {
+  const { favorites } = useFavorites();
+
   return (
-    <div className="flex items-center justify-center h-screen">
-      <h1 className="text-3xl font-bold">
+    <div className="flex flex-col items-center justify-center h-full">
+      <h1 className="text-3xl font-bold my-8">
         Favorites
       </h1>
+      <MovieGrid titles={favorites} />
     </div>
+  );
+}
+
+export default function Favorites() {
+  return (
+    <FavoritesProvider>
+      <FavoritesContent />
+    </FavoritesProvider>
   );
 }
