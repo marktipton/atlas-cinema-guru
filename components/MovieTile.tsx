@@ -33,7 +33,7 @@ const MovieTile: React.FC<MovieTileProps> = ({ title }) => {
           {title.genre}
         </span>
       </div>
-      <div className="absolute top-3 right-3 flex gap-1">
+      <div className="absolute top-3 right-3 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <button className="text-white rounded-full w-6 h-6">
           {title.favorited ? <StarIcon /> : <StarIconOutline />}
         </button>
