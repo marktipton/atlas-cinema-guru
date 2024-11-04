@@ -23,7 +23,7 @@ const NavBar: React.FC = () => {
             <li key={link.href} className='flex items-center'>
               <Link
                 href={link.href}
-                className={`flex items-center gap-2 p-2 pl-4 rounded-md ${
+                className={`flex items-center gap-2 p-2 pl-5 rounded-md ${
                   'text-white'
                 }`}
               >
