@@ -1,7 +1,7 @@
 import React from 'react';
 import { ClockIcon , StarIcon } from "@heroicons/react/24/solid"
 import { ClockIcon as ClockIconOutline , StarIcon as StarIconOutline} from "@heroicons/react/24/outline"
-
+import { useTitles } from '@/contexts/TitlesProvider';
 
 type Title = {
   id: string;
@@ -19,6 +19,7 @@ type MovieTileProps = {
 };
 
 const MovieTile: React.FC<MovieTileProps> = ({ title }) => {
+  const { toggleFavorite, toggleWatchLater } = useTitles();
   return (
     <div className="max-w-sm rounded-lg overflow-hidden outline outline-2 outline-teal relative group">
       <img
@@ -34,10 +35,16 @@ const MovieTile: React.FC<MovieTileProps> = ({ title }) => {
         </span>
       </div>
       <div className="absolute top-3 right-3 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <button className="text-white rounded-full w-6 h-6">
+        <button
+          className="text-white rounded-full w-6 h-6"
+          onClick={() => toggleFavorite(title.id)}
+        >
           {title.favorited ? <StarIcon /> : <StarIconOutline />}
         </button>
-        <button className="text-white rounded-full w-6 h-6">
+        <button
+          className="text-white rounded-full w-6 h-6"
+          onClick={() => toggleWatchLater(title.id)}
+        >
           {title.watchLater ? <ClockIcon /> : <ClockIconOutline />}
         </button>
       </div>
