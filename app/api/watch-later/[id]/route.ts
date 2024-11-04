@@ -6,10 +6,10 @@ import {
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
 
-export const GET = auth(
+export const POST = auth(
   //@ts-ignore
   async (req: NextRequest, { params }: { params: { id: string } }) => {
-    const { id } = params;
+    const { id } = await params;
 
     //@ts-ignore
     if (!req.auth) {
@@ -36,7 +36,7 @@ export const GET = auth(
 export const DELETE = auth(
   //@ts-ignore
   async (req: NextRequest, { params }: { params: { id: string } }) => {
-    const { id } = params;
+    const { id } = await params;
 
     const {
       user: { email }, //@ts-ignore
