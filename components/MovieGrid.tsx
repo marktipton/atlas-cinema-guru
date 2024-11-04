@@ -5,6 +5,7 @@ import MovieTile from './MovieTile';
 const MovieGrid: React.FC = () => {
   const { titles } = useTitles();
 
+  console.log(titles)
   return (
     <div className="grid grid-cols-3 gap-32">
       {titles.map((title) => (

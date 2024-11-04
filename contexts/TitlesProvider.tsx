@@ -1,6 +1,7 @@
 "use client";
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
+import { useFilter } from './FilterProvider';
 
 type Title = {
   id: string;
@@ -25,6 +26,7 @@ const TitlesContext = createContext<TitlesContextType | undefined>(undefined);
 export const TitlesProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { data: session } = useSession();
   const [titles, setTitles] = useState<Title[]>([]);
+  const { filter } = useFilter();
 
   useEffect(() => {
     if (session) {

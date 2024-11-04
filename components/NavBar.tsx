@@ -24,8 +24,8 @@ const NavBar: React.FC = () => {
               <Link
                 href={link.href}
                 className={`flex items-center gap-2 p-2 pl-4 rounded-md ${
-                  pathname === link.href ? 'text-searchBlue' : 'text-white'
-                } hover:text-searchBlue transition-all duration-300`}
+                  'text-white'
+                }`}
               >
                 <link.icon className='w-6 h-6'/>
                 <span className='absolute left-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ml-2'>
