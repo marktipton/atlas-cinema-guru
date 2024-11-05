@@ -15,11 +15,7 @@ type Title = {
 
 type TitlesContextType = {
   titles: Title[];
-  currentPage: number;
-  totalPages: number;
   setTitles: React.Dispatch<React.SetStateAction<Title[]>>;
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
-  fetchTitles: (page: number) => void; // New method for fetching titles
   toggleFavorite: (id: string) => void;
   toggleWatchLater: (id: string) => void;
 };
@@ -29,30 +25,19 @@ const TitlesContext = createContext<TitlesContextType | undefined>(undefined);
 export const TitlesProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { data: session } = useSession();
   const [titles, setTitles] = useState<Title[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [totalPages, setTotalPages] = useState<number>(0); // New state for total pages
 
   useEffect(() => {
     if (session) {
-      fetchTitles(currentPage); // Fetch titles on session change or currentPage change
-    }
-  }, [session, currentPage]);
-
-  const fetchTitles = async (page: number) => {
-    try {
-      const response = await fetch(`/api/titles?page=${page}`, {
+      fetch('/api/titles', {
         headers: {
           Authorization: `Bearer ${session.user?.id}`,
         },
-      });
-      const data = await response.json();
-      setTitles(data.title);
-      // Assuming the API returns total pages in the response
-      setTotalPages(data.totalPages);
-    } catch (error) {
-      console.error("Error fetching titles:", error);
+      })
+        .then((response) => response.json())
+        .then((data) => setTitles(data.title))
+        .catch((error) => console.error("Error fetching titles:", error));
     }
-  };
+  }, [session]);
 
   const toggleFavorite = async (id: string) => {
     setTitles((prevTitles) =>
@@ -93,7 +78,7 @@ export const TitlesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   };
 
   return (
-    <TitlesContext.Provider value={{ titles, currentPage, totalPages, setTitles, setCurrentPage, fetchTitles, toggleFavorite, toggleWatchLater }}>
+    <TitlesContext.Provider value={{ titles, setTitles, toggleFavorite, toggleWatchLater }}>
       {children}
     </TitlesContext.Provider>
   );
