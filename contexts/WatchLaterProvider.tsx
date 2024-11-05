@@ -15,12 +15,12 @@ export const WatchLaterProvider: React.FC<{ children: ReactNode }> = ({ children
   useEffect(() => {
     const fetchWatchLaterData = async () => {
       try {
-        const response = await fetch('/api/watch-later'); // Fetch watchLater from API
+        const response = await fetch('/api/watch-later');
         if (!response.ok) {
           throw new Error(`Error: ${response.statusText}`);
         }
         const data = await response.json();
-        setWatchLater(data.watchLater); // Assuming response has { watchLater: [...] }
+        setWatchLater(data.watchLater);
       } catch (error) {
         console.error('Failed to fetch watchLater:', error);
       }
@@ -29,7 +29,7 @@ export const WatchLaterProvider: React.FC<{ children: ReactNode }> = ({ children
     fetchWatchLaterData();
   }, []);
 
-  // Make sure to return the context provider with children
+
   return (
     <WatchLaterContext.Provider value={{ watchLater }}>
       {children}
@@ -37,7 +37,7 @@ export const WatchLaterProvider: React.FC<{ children: ReactNode }> = ({ children
   );
 };
 
-// Custom hook for accessing the context
+
 export const useWatchLater = (): WatchLaterContextType => {
   const context = useContext(WatchLaterContext);
   if (!context) {

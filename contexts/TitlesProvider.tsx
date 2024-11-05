@@ -51,7 +51,6 @@ export const TitlesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     try {
       const updatedTitle = titles.find((title) => title.id === id);
 
-      // Use the existing API endpoints with ID in the URL
       if (updatedTitle && updatedTitle.favorited) {
         await fetch(`/api/favorites/${id}`, { method: "DELETE" });
       } else {
@@ -72,7 +71,6 @@ export const TitlesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     try {
       const updatedTitle = titles.find((title) => title.id === id);
 
-      // Use the existing API endpoints with ID in the URL
       if (updatedTitle && updatedTitle.watchLater) {
         await fetch(`/api/watch-later/${id}`, { method: "DELETE" });
       } else {

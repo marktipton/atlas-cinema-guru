@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { Title } from '../types'; // Import the Title type
+import { Title } from '../types';
 
 type FavoritesContextType = {
   favorites: Title[];
@@ -13,12 +13,12 @@ export const FavoritesProvider: React.FC<{ children: ReactNode }> = ({ children 
   useEffect(() => {
     const fetchFavoritesData = async () => {
       try {
-        const response = await fetch('/api/favorites'); // Fetch favorites from API
+        const response = await fetch('/api/favorites');
         if (!response.ok) {
           throw new Error(`Error: ${response.statusText}`);
         }
         const data = await response.json();
-        setFavorites(data.favorites); // Assuming response has { favorites: [...] }
+        setFavorites(data.favorites);
       } catch (error) {
         console.error('Failed to fetch favorites:', error);
       }
@@ -34,7 +34,6 @@ export const FavoritesProvider: React.FC<{ children: ReactNode }> = ({ children 
   );
 };
 
-// Custom hook for accessing the context
 export const useFavorites = (): FavoritesContextType => {
   const context = useContext(FavoritesContext);
   if (!context) {
