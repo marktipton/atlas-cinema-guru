@@ -1,10 +1,22 @@
 import React from 'react';
-import { useTitles } from '@/contexts/TitlesProvider';
 import MovieTile from './MovieTile';
 
-const MovieGrid: React.FC = () => {
-  const { titles } = useTitles();
+type Title = {
+  id: string;
+  title: string;
+  synopsis: string;
+  released: number;
+  genre: string;
+  favorited: boolean;
+  watchLater: boolean;
+  image: string;
+};
 
+type MovieGridProps = {
+  titles: Title[];
+};
+
+const MovieGrid: React.FC<MovieGridProps> = ({ titles }) => {
   return (
     <div className="grid grid-cols-3 gap-32">
       {titles.map((title) => (
