@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from 'react';
+import React from 'react';
 import { ClockIcon, StarIcon } from "@heroicons/react/24/solid";
 import { ClockIcon as ClockIconOutline, StarIcon as StarIconOutline } from "@heroicons/react/24/outline";
-import { useToggle } from '@/contexts/ToggleProvider';
+import { useTitles } from '@/contexts/TitlesProvider';
 
 type Title = {
   id: string;
@@ -21,14 +21,14 @@ type MovieTileProps = {
 };
 
 const MovieTile: React.FC<MovieTileProps> = ({ title }) => {
-  const { toggleFavorite, toggleWatchLater } = useToggle();
+  const { toggleFavorite, toggleWatchLater } = useTitles(); // Accessing toggle functions from TitlesProvider
 
   const handleToggleFavorite = () => {
-    toggleFavorite(title.id); // Directly call global toggle function
+    toggleFavorite(title.id); // Directly call the toggle function from context
   };
 
   const handleToggleWatchLater = () => {
-    toggleWatchLater(title.id); // Directly call global toggle function
+    toggleWatchLater(title.id); // Directly call the toggle function from context
   };
 
   return (

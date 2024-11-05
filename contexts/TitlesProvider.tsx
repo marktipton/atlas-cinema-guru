@@ -1,5 +1,6 @@
 "use client";
-import React, { createContext, useContext, useState, useEffect } from 'react';
+
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
 
 type Title = {
@@ -15,7 +16,9 @@ type Title = {
 
 type TitlesContextType = {
   titles: Title[];
-  setTitles: React.Dispatch<React.SetStateAction<Title[]>>;
+  currentPage: number;
+  hasMore: boolean;
+  setPage: (page: number) => void;
   toggleFavorite: (id: string) => void;
   toggleWatchLater: (id: string) => void;
 };
@@ -25,21 +28,31 @@ const TitlesContext = createContext<TitlesContextType | undefined>(undefined);
 export const TitlesProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { data: session } = useSession();
   const [titles, setTitles] = useState<Title[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
 
+  // Fetch paginated titles whenever the session or currentPage changes
   useEffect(() => {
     if (session) {
-      fetch('/api/titles', {
+      fetch(`/api/titles?page=${currentPage}`, {
         headers: {
           Authorization: `Bearer ${session.user?.id}`,
         },
       })
         .then((response) => response.json())
-        .then((data) => setTitles(data.title))
+        .then((data) => {
+          setTitles(data.title);
+          setHasMore(data.title.length > 0);
+        })
         .catch((error) => console.error("Error fetching titles:", error));
     }
-  }, [session]);
+  }, [session, currentPage]);
 
-  const toggleFavorite = async (id: string) => {
+  const setPage = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const toggleFavorite = useCallback(async (id: string) => {
     setTitles((prevTitles) =>
       prevTitles.map((title) =>
         title.id === id ? { ...title, favorited: !title.favorited } : title
@@ -56,9 +69,9 @@ export const TitlesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         console.error("Error updating favorites:", error);
       }
     }
-  };
+  }, [titles]);
 
-  const toggleWatchLater = async (id: string) => {
+  const toggleWatchLater = useCallback(async (id: string) => {
     setTitles((prevTitles) =>
       prevTitles.map((title) =>
         title.id === id ? { ...title, watchLater: !title.watchLater } : title
@@ -75,10 +88,10 @@ export const TitlesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         console.error("Error updating watch later:", error);
       }
     }
-  };
+  }, [titles]);
 
   return (
-    <TitlesContext.Provider value={{ titles, setTitles, toggleFavorite, toggleWatchLater }}>
+    <TitlesContext.Provider value={{ titles, currentPage, hasMore, setPage, toggleFavorite, toggleWatchLater }}>
       {children}
     </TitlesContext.Provider>
   );
