@@ -28,7 +28,7 @@ export default function RootLayout({ children }: Props) {
                     <header>
                       <Header />
                     </header>
-                    <div className="flex h-full">
+                    <div className="flex h-full min-h-screen">
                       <div className="flex-grow-y">
                         <NavBar/>
                       </div>
