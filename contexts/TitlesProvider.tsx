@@ -17,8 +17,6 @@ type Title = {
 type TitlesContextType = {
   titles: Title[];
   setTitles: React.Dispatch<React.SetStateAction<Title[]>>;
-  toggleFavorite: (id: string) => void;
-  toggleWatchLater: (id: string) => void;
 };
 
 const TitlesContext = createContext<TitlesContextType | undefined>(undefined);
@@ -41,53 +39,8 @@ export const TitlesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     }
   }, [session]);
 
-  const toggleFavorite = async (id: string) => {
-    setTitles((prevTitles) =>
-      prevTitles.map((title) =>
-        title.id === id ? { ...title, favorited: !title.favorited } : title
-      )
-    );
-
-    try {
-      const updatedTitle = titles.find((title) => title.id === id);
-
-      if (updatedTitle && updatedTitle.favorited) {
-        await fetch(`/api/favorites/${id}`, { method: "DELETE" });
-      } else {
-        await fetch(`/api/favorites/${id}`, { method: "POST" });
-      }
-    } catch (error) {
-      console.error("Error updating favorites:", error);
-    }
-  };
-
-  const toggleWatchLater = async (id: string) => {
-    setTitles((prevTitles) =>
-      prevTitles.map((title) =>
-        title.id === id ? { ...title, watchLater: !title.watchLater } : title
-      )
-    );
-
-    try {
-      const updatedTitle = titles.find((title) => title.id === id);
-
-      if (updatedTitle && updatedTitle.watchLater) {
-        await fetch(`/api/watch-later/${id}`, { method: "DELETE" });
-      } else {
-        await fetch(`/api/watch-later/${id}`, { method: "POST" });
-      }
-    } catch (error) {
-      console.error("Error updating watch later:", error);
-    }
-  };
-
   return (
-    <TitlesContext.Provider value={{
-      titles,
-      setTitles,
-      toggleFavorite,
-      toggleWatchLater,
-    }}>
+    <TitlesContext.Provider value={{ titles, setTitles }}>
       {children}
     </TitlesContext.Provider>
   );

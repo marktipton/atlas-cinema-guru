@@ -6,6 +6,7 @@ import { Header } from "@/components/Header";
 import { TitlesProvider } from "@/contexts/TitlesProvider";
 import { FilterProvider } from "@/contexts/FilterProvider";
 import AuthGuard from "@/components/AuthGuard";
+import { ToggleProvider } from "@/contexts/ToggleProvider";
 
 export const metadata: Metadata = {
   title: "Cinema Guru | Atlas School",
@@ -22,19 +23,21 @@ export default function RootLayout({ children }: Props) {
         <SessionProvider>
           <FilterProvider>
             <TitlesProvider>
-              <AuthGuard>
-                <header>
-                  <Header />
-                </header>
-                <div className="flex h-full">
-                  <div className="flex-grow-y">
-                    <NavBar/>
+              <ToggleProvider>
+                <AuthGuard>
+                  <header>
+                    <Header />
+                  </header>
+                  <div className="flex h-full">
+                    <div className="flex-grow-y">
+                      <NavBar/>
+                    </div>
+                    <main className="flex-grow p-8 overflow-y-auto">
+                      {children}
+                    </main>
                   </div>
-                  <main className="flex-grow p-8 overflow-y-auto">
-                    {children}
-                  </main>
-                </div>
-              </AuthGuard>
+                </AuthGuard>
+              </ToggleProvider>
             </TitlesProvider>
           </FilterProvider>
         </SessionProvider>

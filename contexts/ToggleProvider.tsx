@@ -1,48 +1,66 @@
 "use client";
-
-import React, { createContext, useContext, ReactNode, useState } from 'react';
-import { Title } from '../types';
+import React, { createContext, useContext, useCallback } from 'react';
+import { useTitles } from './TitlesProvider';
 
 type ToggleContextType = {
   toggleFavorite: (id: string) => void;
   toggleWatchLater: (id: string) => void;
-  titles: Title[]; // If you want to manage the list of titles here as well
-  setTitles: React.Dispatch<React.SetStateAction<Title[]>>; // Allows other contexts to update titles if needed
 };
 
 const ToggleContext = createContext<ToggleContextType | undefined>(undefined);
 
-export const ToggleProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [titles, setTitles] = useState<Title[]>([]);
+export const ToggleProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { titles, setTitles } = useTitles();
 
-  const toggleFavorite = (id: string) => {
+  const toggleFavorite = useCallback(async (id: string) => {
     setTitles((prevTitles) =>
       prevTitles.map((title) =>
         title.id === id ? { ...title, favorited: !title.favorited } : title
       )
     );
-  };
 
-  const toggleWatchLater = (id: string) => {
+    try {
+      const updatedTitle = titles.find((title) => title.id === id);
+
+      if (updatedTitle && updatedTitle.favorited) {
+        await fetch(`/api/favorites/${id}`, { method: "DELETE" });
+      } else {
+        await fetch(`/api/favorites/${id}`, { method: "POST" });
+      }
+    } catch (error) {
+      console.error("Error updating favorites:", error);
+    }
+  }, [titles, setTitles]);
+
+  const toggleWatchLater = useCallback(async (id: string) => {
     setTitles((prevTitles) =>
       prevTitles.map((title) =>
         title.id === id ? { ...title, watchLater: !title.watchLater } : title
       )
     );
-  };
+
+    try {
+      const updatedTitle = titles.find((title) => title.id === id);
+
+      if (updatedTitle && updatedTitle.watchLater) {
+        await fetch(`/api/watch-later/${id}`, { method: "DELETE" });
+      } else {
+        await fetch(`/api/watch-later/${id}`, { method: "POST" });
+      }
+    } catch (error) {
+      console.error("Error updating watch later:", error);
+    }
+  }, [titles, setTitles]);
 
   return (
-    <ToggleContext.Provider value={{ toggleFavorite, toggleWatchLater, titles, setTitles }}>
+    <ToggleContext.Provider value={{ toggleFavorite, toggleWatchLater }}>
       {children}
     </ToggleContext.Provider>
   );
 };
 
-// Custom hook to use ToggleContext in other components
-export const useToggle = (): ToggleContextType => {
+export const useToggle = () => {
   const context = useContext(ToggleContext);
-  if (!context) {
-    throw new Error("useToggle must be used within a ToggleProvider");
-  }
+  if (!context) throw new Error('useToggle must be used within ToggleProvider');
   return context;
 };

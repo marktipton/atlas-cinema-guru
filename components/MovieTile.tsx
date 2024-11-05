@@ -1,7 +1,7 @@
 import React from 'react';
-import { ClockIcon , StarIcon } from "@heroicons/react/24/solid"
-import { ClockIcon as ClockIconOutline , StarIcon as StarIconOutline} from "@heroicons/react/24/outline"
-import { useTitles } from '@/contexts/TitlesProvider';
+import { ClockIcon, StarIcon } from "@heroicons/react/24/solid";
+import { ClockIcon as ClockIconOutline, StarIcon as StarIconOutline } from "@heroicons/react/24/outline";
+import { useToggle } from '@/contexts/ToggleProvider';
 
 type Title = {
   id: string;
@@ -19,7 +19,8 @@ type MovieTileProps = {
 };
 
 const MovieTile: React.FC<MovieTileProps> = ({ title }) => {
-  const { toggleFavorite, toggleWatchLater } = useTitles();
+  const { toggleFavorite, toggleWatchLater } = useToggle();
+
   return (
     <div className="max-w-sm rounded-lg overflow-hidden outline outline-2 outline-teal relative group">
       <img
