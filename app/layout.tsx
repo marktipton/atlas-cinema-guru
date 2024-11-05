@@ -24,19 +24,19 @@ export default function RootLayout({ children }: Props) {
           <FilterProvider>
             <TitlesProvider>
               <ToggleProvider>
-                <AuthGuard>
-                  <header>
-                    <Header />
-                  </header>
-                  <div className="flex h-full">
-                    <div className="flex-grow-y">
-                      <NavBar/>
+                  <AuthGuard>
+                    <header>
+                      <Header />
+                    </header>
+                    <div className="flex h-full">
+                      <div className="flex-grow-y">
+                        <NavBar/>
+                      </div>
+                      <main className="flex-grow p-8 overflow-y-auto">
+                        {children}
+                      </main>
                     </div>
-                    <main className="flex-grow p-8 overflow-y-auto">
-                      {children}
-                    </main>
-                  </div>
-                </AuthGuard>
+                  </AuthGuard>
               </ToggleProvider>
             </TitlesProvider>
           </FilterProvider>

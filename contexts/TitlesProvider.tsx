@@ -1,7 +1,6 @@
 "use client";
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
-import { useFilter } from './FilterProvider';
 
 type Title = {
   id: string;
@@ -17,6 +16,8 @@ type Title = {
 type TitlesContextType = {
   titles: Title[];
   setTitles: React.Dispatch<React.SetStateAction<Title[]>>;
+  toggleFavorite: (id: string) => void;
+  toggleWatchLater: (id: string) => void;
 };
 
 const TitlesContext = createContext<TitlesContextType | undefined>(undefined);
@@ -24,7 +25,6 @@ const TitlesContext = createContext<TitlesContextType | undefined>(undefined);
 export const TitlesProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { data: session } = useSession();
   const [titles, setTitles] = useState<Title[]>([]);
-  const { filter } = useFilter();
 
   useEffect(() => {
     if (session) {
@@ -39,8 +39,46 @@ export const TitlesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     }
   }, [session]);
 
+  const toggleFavorite = async (id: string) => {
+    setTitles((prevTitles) =>
+      prevTitles.map((title) =>
+        title.id === id ? { ...title, favorited: !title.favorited } : title
+      )
+    );
+
+    const updatedTitle = titles.find((title) => title.id === id);
+    if (updatedTitle) {
+      try {
+        await fetch(`/api/favorites/${id}`, {
+          method: updatedTitle.favorited ? "DELETE" : "POST",
+        });
+      } catch (error) {
+        console.error("Error updating favorites:", error);
+      }
+    }
+  };
+
+  const toggleWatchLater = async (id: string) => {
+    setTitles((prevTitles) =>
+      prevTitles.map((title) =>
+        title.id === id ? { ...title, watchLater: !title.watchLater } : title
+      )
+    );
+
+    const updatedTitle = titles.find((title) => title.id === id);
+    if (updatedTitle) {
+      try {
+        await fetch(`/api/watch-later/${id}`, {
+          method: updatedTitle.watchLater ? "DELETE" : "POST",
+        });
+      } catch (error) {
+        console.error("Error updating watch later:", error);
+      }
+    }
+  };
+
   return (
-    <TitlesContext.Provider value={{ titles, setTitles }}>
+    <TitlesContext.Provider value={{ titles, setTitles, toggleFavorite, toggleWatchLater }}>
       {children}
     </TitlesContext.Provider>
   );

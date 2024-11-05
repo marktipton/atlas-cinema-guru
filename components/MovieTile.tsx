@@ -1,4 +1,6 @@
-import React from 'react';
+"use client";
+
+import React, { useState } from 'react';
 import { ClockIcon, StarIcon } from "@heroicons/react/24/solid";
 import { ClockIcon as ClockIconOutline, StarIcon as StarIconOutline } from "@heroicons/react/24/outline";
 import { useToggle } from '@/contexts/ToggleProvider';
@@ -21,6 +23,14 @@ type MovieTileProps = {
 const MovieTile: React.FC<MovieTileProps> = ({ title }) => {
   const { toggleFavorite, toggleWatchLater } = useToggle();
 
+  const handleToggleFavorite = () => {
+    toggleFavorite(title.id); // Directly call global toggle function
+  };
+
+  const handleToggleWatchLater = () => {
+    toggleWatchLater(title.id); // Directly call global toggle function
+  };
+
   return (
     <div className="max-w-sm rounded-lg overflow-hidden outline outline-2 outline-teal relative group">
       <img
@@ -38,13 +48,13 @@ const MovieTile: React.FC<MovieTileProps> = ({ title }) => {
       <div className="absolute top-3 right-3 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <button
           className="text-white rounded-full w-6 h-6"
-          onClick={() => toggleFavorite(title.id)}
+          onClick={handleToggleFavorite}
         >
           {title.favorited ? <StarIcon /> : <StarIconOutline />}
         </button>
         <button
           className="text-white rounded-full w-6 h-6"
-          onClick={() => toggleWatchLater(title.id)}
+          onClick={handleToggleWatchLater}
         >
           {title.watchLater ? <ClockIcon /> : <ClockIconOutline />}
         </button>
