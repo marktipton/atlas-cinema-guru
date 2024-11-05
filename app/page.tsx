@@ -11,7 +11,7 @@ export default function Page() {
   const { data: session } = useSession();
   const { titles, setTitles } = useTitles();
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [hasMore, setHasMore] = useState(true); // Track if there are more titles
 
   // Fetch titles when the component mounts or currentPage changes
   useEffect(() => {
@@ -23,8 +23,9 @@ export default function Page() {
       })
         .then((response) => response.json())
         .then((data) => {
+          console.log(data); // Log API response
           setTitles(data.title);
-          setTotalPages(data.totalPages); // Assuming your API returns this
+          setHasMore(data.title.length > 0); // Check if more titles are available
         })
         .catch((error) => console.error("Error fetching titles:", error));
     }
@@ -33,12 +34,10 @@ export default function Page() {
   return (
     <div className="flex flex-col items-center justify-center h-full">
       <SearchBar />
-      <MovieGrid
-        titles={titles}
-      />
+      <MovieGrid titles={titles} />
       <Pagination
         currentPage={currentPage}
-        totalPages={totalPages}
+        hasMore={hasMore}
         onPageChange={setCurrentPage}
       />
     </div>
