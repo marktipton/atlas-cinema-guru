@@ -17,7 +17,7 @@ const LatestActivities = () => {
       </div>
       <div className="space-y-2">
         {activities.length > 0 ? (
-          activities.slice().reverse().map((activity, index) => (
+          activities.slice().reverse().slice(0, 10).map((activity, index) => (
             <div key={index} className="p-1 rounded-md text-blue">
             <div className="text-xs text-blue">{activity.time}</div>
             <div className="text-xs">
