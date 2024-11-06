@@ -43,21 +43,27 @@ export const TitlesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [hasMore, setHasMore] = useState(true);
   const [activities, setActivities] = useState<Activity[]>([]);
   const [query, setQuery] = useState('');
-  const [minYear, setMinYear] = useState(0);
+  const [minYear, setMinYear] = useState<number>(1990);
   const [maxYear, setMaxYear] = useState(new Date().getFullYear());
   const [genres, setGenres] = useState<string[]>([]);
 
   // Fetch paginated titles whenever the session or currentPage changes
   useEffect(() => {
     if (session) {
-      const params = new URLSearchParams({
+      const params: any = {
         page: currentPage.toString(),
         minYear: minYear.toString(),
         maxYear: maxYear.toString(),
         query,
-        genres: genres.join(','),
-      });
-      fetch(`/api/titles?${params.toString()}`, {
+      };
+
+      // Only add genres if they are selected (not empty)
+      if (genres.length > 0) {
+        params.genres = genres.join(',');
+      }
+
+      const searchParams = new URLSearchParams(params);
+      fetch(`/api/titles?${searchParams.toString()}`, {
         headers: {
           Authorization: `Bearer ${session.user?.id}`,
         },
@@ -69,7 +75,7 @@ export const TitlesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         })
         .catch((error) => console.error("Error fetching titles:", error));
     }
-  }, [session, currentPage, query, minYear, maxYear, genres]);
+  }, [session, currentPage, query, minYear, maxYear, genres, setTitles, setHasMore]);
 
   const setPage = (page: number) => {
     setCurrentPage(page);
