@@ -36,7 +36,7 @@ const NavBar: React.FC = () => {
             </li>
           ))}
         </ul>
-        <div className='flex flex-col align-centermt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 w-44 pl-4'>
+        <div className='flex flex-col align-centermt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-400 w-44 pl-4'>
           <LatestActivities/>
         </div>
       </nav>
