@@ -21,6 +21,7 @@ type TitlesContextType = {
   setPage: (page: number) => void;
   toggleFavorite: (id: string) => void;
   toggleWatchLater: (id: string) => void;
+  activities: Activity[];
 };
 
 type Activity = {
@@ -109,7 +110,7 @@ export const TitlesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   }, [titles]);
 
   return (
-    <TitlesContext.Provider value={{ titles, currentPage, hasMore, setPage, toggleFavorite, toggleWatchLater }}>
+    <TitlesContext.Provider value={{ titles, currentPage, hasMore, setPage, toggleFavorite, toggleWatchLater, activities }}>
       {children}
     </TitlesContext.Provider>
   );
