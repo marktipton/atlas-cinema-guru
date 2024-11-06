@@ -22,6 +22,10 @@ type TitlesContextType = {
   toggleFavorite: (id: string) => void;
   toggleWatchLater: (id: string) => void;
   activities: Activity[];
+  setQuery: (query: string) => void;
+  setMinYear: (year: number) => void;
+  setMaxYear: (year: number) => void;
+  setGenres: (genres: string[]) => void;
 };
 
 type Activity = {
@@ -38,11 +42,22 @@ export const TitlesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [activities, setActivities] = useState<Activity[]>([]);
+  const [query, setQuery] = useState('');
+  const [minYear, setMinYear] = useState(0);
+  const [maxYear, setMaxYear] = useState(new Date().getFullYear());
+  const [genres, setGenres] = useState<string[]>([]);
 
   // Fetch paginated titles whenever the session or currentPage changes
   useEffect(() => {
     if (session) {
-      fetch(`/api/titles?page=${currentPage}`, {
+      const params = new URLSearchParams({
+        page: currentPage.toString(),
+        minYear: minYear.toString(),
+        maxYear: maxYear.toString(),
+        query,
+        genres: genres.join(','),
+      });
+      fetch(`/api/titles?${params.toString()}`, {
         headers: {
           Authorization: `Bearer ${session.user?.id}`,
         },
@@ -54,7 +69,7 @@ export const TitlesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         })
         .catch((error) => console.error("Error fetching titles:", error));
     }
-  }, [session, currentPage]);
+  }, [session, currentPage, query, minYear, maxYear, genres]);
 
   const setPage = (page: number) => {
     setCurrentPage(page);
@@ -118,7 +133,7 @@ export const TitlesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   }, [titles]);
 
   return (
-    <TitlesContext.Provider value={{ titles, currentPage, hasMore, setPage, toggleFavorite, toggleWatchLater, activities }}>
+    <TitlesContext.Provider value={{ titles, currentPage, hasMore, setPage, toggleFavorite, toggleWatchLater, activities, setQuery, setMinYear, setMaxYear, setGenres }}>
       {children}
     </TitlesContext.Provider>
   );

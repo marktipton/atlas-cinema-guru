@@ -2,7 +2,11 @@
 
 import React, { useEffect, useState } from 'react';
 
-const Genres: React.FC = () => {
+type GenresProps = {
+  onChange: (selectedGenres: string[]) => void; // Define onChange prop
+};
+
+const Genres: React.FC<GenresProps> = ({ onChange }) => {
   const [genres, setGenres] = useState<string[]>([]);
   const [selectedGenres, setSelectedGenres] = useState<Set<string>>(new Set());
 
@@ -27,6 +31,11 @@ const Genres: React.FC = () => {
       return newSelectedGenres;
     });
   };
+
+  // Notify parent of selected genres whenever they change
+  useEffect(() => {
+    onChange(Array.from(selectedGenres)); // Convert Set to Array for easier handling
+  }, [selectedGenres, onChange]);
 
   return (
     <div>

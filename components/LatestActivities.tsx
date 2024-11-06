@@ -11,7 +11,7 @@ const LatestActivities = () => {
   const { activities } = useTitles();
 
   return (
-    <div className="bg-teal rounded-lg p-2">
+    <div className="bg-teal rounded-lg p-2 mt-2">
       <div className="text-lg font-bold text-blue mb-2">
         Latest Activities
       </div>
@@ -19,8 +19,8 @@ const LatestActivities = () => {
         {activities.length > 0 ? (
           activities.slice().reverse().slice(0, 10).map((activity, index) => (
             <div key={index} className="p-1 rounded-md text-blue">
-            <div className="text-xs text-blue">{activity.time}</div>
-            <div className="text-xs">
+            <div className="text-s text-blue">{activity.time}</div>
+            <div className="text-s">
                 {activity.type === 'favorited' && (
                   <>
                     Favorited <span className="font-semibold">{activity.title}</span>
