@@ -26,6 +26,7 @@ type TitlesContextType = {
   setMinYear: (year: number) => void;
   setMaxYear: (year: number) => void;
   setGenres: (genres: string[]) => void;
+  handleGenreChange: (selectedGenre: string) => void;
 };
 
 type Activity = {
@@ -79,6 +80,18 @@ export const TitlesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
   const setPage = (page: number) => {
     setCurrentPage(page);
+  };
+
+  const handleGenreChange = (selectedGenre: string) => {
+    setGenres((prevGenres) => {
+      // Reset to page 1 whenever genres are changed
+      setCurrentPage(1);
+
+      // Toggle the genre (if already selected, remove it; if not, add it)
+      return prevGenres.includes(selectedGenre)
+        ? prevGenres.filter((genre) => genre !== selectedGenre)
+        : [...prevGenres, selectedGenre];
+    });
   };
 
   const toggleFavorite = useCallback(async (id: string) => {
@@ -139,7 +152,7 @@ export const TitlesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   }, [titles]);
 
   return (
-    <TitlesContext.Provider value={{ titles, currentPage, hasMore, setPage, toggleFavorite, toggleWatchLater, activities, setQuery, setMinYear, setMaxYear, setGenres }}>
+    <TitlesContext.Provider value={{ titles, currentPage, hasMore, setPage, toggleFavorite, toggleWatchLater, activities, setQuery, setMinYear, setMaxYear, setGenres, handleGenreChange }}>
       {children}
     </TitlesContext.Provider>
   );

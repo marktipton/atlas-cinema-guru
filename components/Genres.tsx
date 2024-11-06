@@ -1,5 +1,6 @@
 "use client";
 
+import { useTitles } from '@/contexts/TitlesProvider';
 import React, { useEffect, useState } from 'react';
 
 type GenresProps = {
@@ -9,6 +10,7 @@ type GenresProps = {
 const Genres: React.FC<GenresProps> = ({ onChange }) => {
   const [genres, setGenres] = useState<string[]>([]);
   const [selectedGenres, setSelectedGenres] = useState<Set<string>>(new Set());
+  const { handleGenreChange } = useTitles();
 
   useEffect(() => {
     const fetchGenres = async () => {
@@ -30,6 +32,7 @@ const Genres: React.FC<GenresProps> = ({ onChange }) => {
       }
       return newSelectedGenres;
     });
+    handleGenreChange(genre);
   };
 
   // Notify parent of selected genres whenever they change

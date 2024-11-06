@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useTitles } from '@/contexts/TitlesProvider';
 import Genres from './Genres';
 
@@ -8,6 +8,13 @@ const SearchBar = () => {
   const [search, setSearch] = useState('');
   const [minYearInput, setMinYearInput] = useState('');
   const [maxYearInput, setMaxYearInput] = useState('');
+
+  const currentYear = new Date().getFullYear();
+
+  useEffect(() => {
+    setMinYearInput('1990');
+    setMaxYearInput(currentYear.toString());
+  });
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
