@@ -23,6 +23,12 @@ type TitlesContextType = {
   toggleWatchLater: (id: string) => void;
 };
 
+type Activity = {
+  type: 'favorited' | 'unfavorited';
+  title: string;
+  time: string;
+};
+
 const TitlesContext = createContext<TitlesContextType | undefined>(undefined);
 
 export const TitlesProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -30,6 +36,7 @@ export const TitlesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [titles, setTitles] = useState<Title[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const [activities, setActivities] = useState<Activity[]>([]);
 
   // Fetch paginated titles whenever the session or currentPage changes
   useEffect(() => {
@@ -59,12 +66,23 @@ export const TitlesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       )
     );
 
+    // Capture the updated title to determine its new favorited state
     const updatedTitle = titles.find((title) => title.id === id);
     if (updatedTitle) {
       try {
         await fetch(`/api/favorites/${id}`, {
           method: updatedTitle.favorited ? "DELETE" : "POST",
         });
+
+        // Add the activity log after updating the favorite status
+        setActivities((prevActivities) => [
+          ...prevActivities,
+          {
+            type: updatedTitle.favorited ? 'unfavorited' : 'favorited', // Determine action type based on current status
+            title: updatedTitle.title,
+            time: new Date().toLocaleTimeString(),
+          },
+        ]);
       } catch (error) {
         console.error("Error updating favorites:", error);
       }
