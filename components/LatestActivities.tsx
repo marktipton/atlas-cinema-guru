@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useTitles } from '@/contexts/TitlesProvider';
 
 type Activity = {
@@ -9,22 +9,6 @@ type Activity = {
 
 const LatestActivities = () => {
   const { activities } = useTitles();
-
-  // // This function will simulate adding a new activity
-  // const addActivity = (type: string, title: string) => {
-  //   const newActivity: Activity = {
-  //     type,
-  //     title,
-  //     time: new Date().toLocaleString(), // Store the current time
-  //   };
-  //   setActivities((prevActivities) => [newActivity, ...prevActivities]);
-  // };
-
-  // useEffect(() => {
-  //   // This is just a placeholder for testing
-  //   addActivity('Favorited', 'Movie 1'); // Simulating an activity when the component mounts
-  //   addActivity('WatchLater', 'Movie 2');
-  // }, []);
 
   return (
     <div className="bg-teal rounded-lg p-2">
@@ -44,7 +28,17 @@ const LatestActivities = () => {
                 )}
                 {activity.type === 'unfavorited' && (
                   <>
+                    Unfavorited <span className="font-semibold">{activity.title}</span>
+                  </>
+                )}
+                {activity.type === 'watchlater' && (
+                  <>
                     Added <span className="font-semibold">{activity.title}</span> to watch later
+                  </>
+                )}
+                {activity.type === 'unwatchlater' && (
+                  <>
+                    Removed <span className="font-semibold">{activity.title}</span> from watch later
                   </>
                 )}
               </div>

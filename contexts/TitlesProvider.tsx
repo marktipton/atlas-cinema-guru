@@ -25,7 +25,7 @@ type TitlesContextType = {
 };
 
 type Activity = {
-  type: 'favorited' | 'unfavorited';
+  type: 'favorited' | 'unfavorited' | 'watchlater' | 'unwatchlater';
   title: string;
   time: string;
 };
@@ -79,7 +79,7 @@ export const TitlesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         setActivities((prevActivities) => [
           ...prevActivities,
           {
-            type: updatedTitle.favorited ? 'unfavorited' : 'favorited', // Determine action type based on current status
+            type: updatedTitle.favorited ? 'unfavorited' : 'favorited',
             title: updatedTitle.title,
             time: new Date().toLocaleTimeString(),
           },
@@ -103,6 +103,14 @@ export const TitlesProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         await fetch(`/api/watch-later/${id}`, {
           method: updatedTitle.watchLater ? "DELETE" : "POST",
         });
+        setActivities((prevActivities) => [
+          ...prevActivities,
+          {
+            type: updatedTitle.watchLater ? 'unwatchlater' : 'watchlater',
+            title: updatedTitle.title,
+            time: new Date().toLocaleTimeString(),
+          },
+        ]);
       } catch (error) {
         console.error("Error updating watch later:", error);
       }
